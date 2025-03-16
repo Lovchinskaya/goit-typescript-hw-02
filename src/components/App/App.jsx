@@ -35,9 +35,7 @@ export default function App() {
       try {
         setIsLoading(true);
         setError(false);
-
         const data = await fetchImage(searchTerm, page);
-
         if (data.length === 0 || data.length < 15) {
           setHasMore(false);
         }

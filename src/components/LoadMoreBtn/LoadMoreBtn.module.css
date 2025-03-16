@@ -4,24 +4,23 @@
   }
   
   .button {
-    width: 115px;
     height: 40px;
     margin: 0 auto;
     margin-top: 15px;
-    padding: 0;
+    width: 100px;
+    height: 40px;
+    border-radius: 15px;
     border: none;
-    color: rgb(255, 255, 255);
-    background-color: rgba(0, 0, 0, 0.3);
-    text-shadow: rgba(0, 0, 0, 0.3) 1px 1px 1px;
-    border-radius: 4px;
-    box-shadow: rgba(100, 100, 100, 0.2) 0px -5px 45px inset;
-    transition: color 250ms linear, box-shadow 250ms linear,
-      background-color 250ms linear;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    background-color: rgb(15, 136, 160);
+    padding: 0;
+    color: aliceblue;
   }
   
   .button:hover,
   .button:focus {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: green;
-    box-shadow: rgba(100, 100, 100, 0.2) 0px -5px 45px inset;
-  }
+    background-color: rgb(4, 79, 92);
+}

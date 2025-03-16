@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const fetchImage = async (topic, currentPage) => {
     const axiosParams = {
       params: {
@@ -15,14 +17,3 @@ export const fetchImage = async (topic, currentPage) => {
     return response.data.results;
   };
 
-
-// import axios from "axios";
-
-// const keyId = '1faky0Z-L8WXuSOFqf8qkWNtiTYUvTwzwxWKCsw4lAA';
-
-// export const fetchImages = async (topic) => {
-//     const response = await axios.get(
-//               `https://api.unsplash.com/photos/?client_id=${keyId}&query=${topic}`
-//             );
-//             return (response.data)
-// }

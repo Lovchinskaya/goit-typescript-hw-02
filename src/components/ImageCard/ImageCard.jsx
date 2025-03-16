@@ -11,26 +11,16 @@ export default function ImageCard({
   onImageClick,
 }) {
   return (
-    <>
       <div className={css.container}>
-        <img
-          className={css.img}
-          src={small}
-          alt={slug}
-          width={'400px'}
-          height={'260px'}
-          onClick={() => onImageClick(regular)}
-        />
-        <div className={css.info}>
-          <h2 className={css.title}>
-            {description || 'No description available'}
-          </h2>
-          <div className={css.wrapper}>
-            <p className={css.text}>Photo by: {user?.name || 'Unknown'}</p>
-            <p className={css.text}>Likes: {likes}</p>
-          </div>
-        </div>
-      </div>
-    </>
+      <a src={small} className={css.galleryLink}>
+    <div className={css.card}>
+    <img src={small} alt={description} width={'360px'} className={css.img} onClick={() => onImageClick(regular)}/>
+    <div className={css.cardInfo}>
+      <p className={css.cardInfoItem}>Likes<span>{likes}</span></p>
+      <p className={css.cardInfoItem}>Description<span>{slug}</span></p>
+    </div>
+    </div>
+    </a>
+</div>
   );
 }
