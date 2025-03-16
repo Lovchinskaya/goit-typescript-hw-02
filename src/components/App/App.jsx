@@ -1,45 +1,121 @@
-import { useEffect, useState } from 'react'
-// import axios from 'axios';
-// import './App.css'
-import SearchBar from '../SearchBar/SearchBar'
-import { fetchImages } from '../ImageService/ImageService';
 
-
+import css from './App.module.css';
+import { useEffect, useState } from 'react';
+import { fetchImage } from '../ImageService/ImageService.jsx';
+import toast, { Toaster } from 'react-hot-toast';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+import ImageGallery from '../ImageGallery/ImageGallery.jsx';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn.jsx';
+import Loader from '../Loader/Loader.jsx';
+import ImageModal from '../ImageModal/ImageModal.jsx';
+import ErrorMessage from '../ErrorMessage/ErrorMessage.jsx';
 
 export default function App() {
-const [image, setImage] = useState ();
-   
-  // useEffect(() => {
-  //   console.log(image)
-  //   async function getImages() {
-  //     try {
-  //        const data = await fetchImages()
-  //        console.log(data)
-  //     }
-  //     catch (error){
+  const [image, setImage] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  //     }
-  //   }
-  //    getImages();
-  // }, [image]);
+  const handleSearch = topic => {
+    setSearchTerm(topic);
+    setPage(1);
+    setImage([]);
+    setHasMore(true);
+  };
 
-const handleSearch = async (topic) => {
-  try {
-           const data = await fetchImages(topic)
-           console.log(data)
+  useEffect(() => {
+    if (searchTerm === '') {
+      return;
+    }
+    async function getData() {
+      try {
+        setIsLoading(true);
+        setError(false);
+
+        const data = await fetchImage(searchTerm, page);
+
+        if (data.length === 0 || data.length < 15) {
+          setHasMore(false);
         }
-        catch (error){
-  
-        }
-}
 
+        setImage(prevImages => {
+          return [...prevImages, ...data];
+        });
+      } catch {
+        setError(true);
+        toast.error('Whoops there was an error plz reload...', {
+          duration: 4000,
+          position: 'top-right',
+          className: `${css['toast-error']} ${css['error']}`,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getData();
+  }, [searchTerm, page]);
+
+  const openModal = imageUrl => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
 
   return (
- <>
- <SearchBar onSearch={handleSearch}/>
- </>
+    <div className={css.container}>
+      <SearchBar onSubmit={handleSearch} />
+      {image.length > 0 && (
+        <ImageGallery items={image} onImageClick={openModal} />
+      )}
+
+      {isLoading && <Loader loading={isLoading} />}
     
-  )
+      {error && <ErrorMessage />}
+
+      {image.length > 0 && !isLoading && hasMore && (
+        <LoadMoreBtn page={page} onPage={setPage} />
+      )}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        imageUrl={selectedImage}
+        alt="Selected"
+      />
+      <Toaster position="top-right" />
+    </div>
+  );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

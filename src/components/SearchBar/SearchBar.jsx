@@ -1,8 +1,8 @@
 import { Formik, Form, Field} from 'formik';
 import css from './SearchBar.module.css'
+import toast from 'react-hot-toast';
 
-
-export default function SearchBar ({ onSearch }) {
+export default function SearchBar ({ onSubmit }) {
 
     return (
     <header className={css.formcontainer}>
@@ -11,8 +11,15 @@ export default function SearchBar ({ onSearch }) {
             topic: ''
         }}
         onSubmit={(values, actions) =>{
-            onSearch(values.topic)
-            console.log(values.topic);
+            if (values.topic.trim() === '') {
+                toast.error('Please enter something for seach.', {
+                  duration: 1750,
+                  position: 'top-center',
+                  className: `${css['custom-toast-error']} ${css['info']}`,
+                });
+                return;
+              }
+            onSubmit(values.topic)
             actions.resetForm();
         }}
         >
