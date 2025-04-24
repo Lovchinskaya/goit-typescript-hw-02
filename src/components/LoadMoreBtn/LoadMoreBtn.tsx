@@ -1,6 +1,10 @@
 import css from './LoadMoreBtn.module.css';
 
-export default function LoadMoreBtn({ page, onPage }) {
+type Props = {
+  onPage: any;
+  page: number;
+};
+export default function LoadMoreBtn({ page, onPage }: Props) {
   return (
     <div className={css.container}>
       <button className={css.button} onClick={() => onPage(page + 1)}>

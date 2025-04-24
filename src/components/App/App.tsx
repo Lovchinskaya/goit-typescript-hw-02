@@ -3,24 +3,25 @@ import css from './App.module.css';
 import { useEffect, useState } from 'react';
 import { fetchImage } from '../ImageService/ImageService.jsx';
 import toast, { Toaster } from 'react-hot-toast';
-import SearchBar from '../SearchBar/SearchBar.jsx';
-import ImageGallery from '../ImageGallery/ImageGallery.jsx';
-import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn.jsx';
-import Loader from '../Loader/Loader.jsx';
-import ImageModal from '../ImageModal/ImageModal.jsx';
-import ErrorMessage from '../ErrorMessage/ErrorMessage.jsx';
+import SearchBar from '../SearchBar/SearchBar.js';
+import ImageGallery from '../ImageGallery/ImageGallery.js';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn.js';
+import Loader from '../Loader/Loader.js';
+import ImageModal from '../ImageModal/ImageModal.js';
+import ErrorMessage from '../ErrorMessage/ErrorMessage.js';
+
 
 export default function App() {
-  const [image, setImage] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [image, setImage] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const handleSearch = topic => {
+  const handleSearch = (topic: string) => {
     setSearchTerm(topic);
     setPage(1);
     setImage([]);
@@ -58,7 +59,7 @@ export default function App() {
     getData();
   }, [searchTerm, page]);
 
-  const openModal = imageUrl => {
+  const openModal = (imageUrl: string) => {
     setSelectedImage(imageUrl);
     setIsModalOpen(true);
   };
