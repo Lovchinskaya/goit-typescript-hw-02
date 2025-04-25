@@ -2,7 +2,12 @@ import { Formik, Form, Field} from 'formik';
 import css from './SearchBar.module.css'
 import toast from 'react-hot-toast';
 
-export default function SearchBar ({ onSubmit }) {
+
+interface Props {
+  onSubmit: (value: string) => void;
+}
+
+export default function SearchBar ({ onSubmit }: Props) {
 
     return (
     <header className={css.formcontainer}>

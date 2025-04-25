@@ -10,9 +10,19 @@ import Loader from '../Loader/Loader.js';
 import ImageModal from '../ImageModal/ImageModal.js';
 import ErrorMessage from '../ErrorMessage/ErrorMessage.js';
 
+interface Image {
+  id: string;
+  description: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  slug: string,
+  likes: number,
+}
 
 export default function App() {
-  const [image, setImage] = useState<string[]>([]);
+  const [images, setImages] = useState<Image[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -24,7 +34,7 @@ export default function App() {
   const handleSearch = (topic: string) => {
     setSearchTerm(topic);
     setPage(1);
-    setImage([]);
+    setImages([]);
     setHasMore(true);
   };
 
@@ -41,7 +51,7 @@ export default function App() {
           setHasMore(false);
         }
 
-        setImage(prevImages => {
+        setImages(prevImages => {
           return [...prevImages, ...data];
         });
       } catch {
@@ -72,15 +82,15 @@ export default function App() {
   return (
     <div className={css.container}>
       <SearchBar onSubmit={handleSearch} />
-      {image.length > 0 && (
-        <ImageGallery items={image} onImageClick={openModal} />
+      {images.length > 0 && (
+        <ImageGallery items={images} onImageClick={openModal} />
       )}
 
       {isLoading && <Loader loading={isLoading} />}
     
       {error && <ErrorMessage />}
 
-      {image.length > 0 && !isLoading && hasMore && (
+      {images.length > 0 && !isLoading && hasMore && (
         <LoadMoreBtn page={page} onPage={setPage} />
       )}
       <ImageModal

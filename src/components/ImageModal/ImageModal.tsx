@@ -3,7 +3,14 @@ import css from './ImageModal.module.css';
 
 Modal.setAppElement('#root');
 
-export default function ImageModal({ isOpen, onClose, imageUrl, alt }) {
+type Props = {
+  isOpen: boolean, 
+  onClose: () => void, 
+  imageUrl: string | null, 
+  alt: string,
+}
+
+export default function ImageModal({ isOpen, onClose, imageUrl, alt }: Props) {
   return (
     <Modal
       isOpen={isOpen}
@@ -11,12 +18,12 @@ export default function ImageModal({ isOpen, onClose, imageUrl, alt }) {
       className={css.modal}
       overlayClassName={css.overlayContainer}
     >
-      <div className={css.content}>
+      {imageUrl &&<div className={css.content}>
         <img src={imageUrl} alt={alt} className={css.image} />
         <button className={css.btnClose} onClick={onClose}>
           ✖
         </button>
-      </div>
+      </div>}
     </Modal>
   );
 }
