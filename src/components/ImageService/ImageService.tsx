@@ -1,6 +1,26 @@
 import axios from 'axios';
 
-export const fetchImage = async (topic, currentPage) => {
+
+
+interface Image {
+  id: number;
+  description: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  slug: string,
+  likes: number,
+}
+
+interface SearchResponse {
+  total: number;
+  total_pages: number;
+  results: Image[];
+}
+
+export const fetchImage = async (topic: string, currentPage: number) : 
+Promise<Image[]> => {
     const axiosParams = {
       params: {
         query: topic,
@@ -10,7 +30,7 @@ export const fetchImage = async (topic, currentPage) => {
       },
     };
     console.log(axiosParams);
-    const response = await axios.get(
+    const response = await axios.get<SearchResponse>(
       `https://api.unsplash.com/search/photos`,
       axiosParams
     );
