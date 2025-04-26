@@ -1,6 +1,6 @@
 import css from './ImageCard.module.css';
 
-type Image  = {
+interface Image  {
   id: number;
     urls: { small: string, regular: string },
     slug: string,
@@ -9,7 +9,7 @@ type Image  = {
 }
 
 interface Props {
-  data: Image[];
+  data: Image;
   onImageClick: (image: Image) => void;
 }
 
@@ -18,12 +18,12 @@ interface Props {
 export default function ImageCard ({data, onImageClick}: Props) {
   return (
       <div className={css.container}>
-      <a src={small} className={css.galleryLink}>
+      <a href={data.urls.small} className={css.galleryLink}>
     <div className={css.card}>
-    <img src={small} alt={description} width={'360px'} className={css.img} onClick={() => onImageClick(data)}/>
+    <img src={data.urls.small} alt={data.description} width={'360px'} className={css.img} onClick={() => onImageClick(data)}/>
     <div className={css.cardInfo}>
-      <p className={css.cardInfoItem}>Likes<span>{likes}</span></p>
-      <p className={css.cardInfoItem}>Description<span>{slug}</span></p>
+      <p className={css.cardInfoItem}>Likes<span>{data.likes}</span></p>
+      <p className={css.cardInfoItem}>Description<span>{data.slug}</span></p>
     </div>
     </div>
     </a>

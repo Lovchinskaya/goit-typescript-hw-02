@@ -3,10 +3,21 @@ import css from './ImageModal.module.css';
 
 Modal.setAppElement('#root');
 
+interface Image {
+  id: number;
+  description: string;
+  urls: {
+    small: string;
+    regular: string;
+  };
+  slug: string,
+  likes: number,
+}
+
 type Props = {
   isOpen: boolean, 
   onClose: () => void, 
-  imageUrl: string | null, 
+  imageUrl: Image, 
   alt: string,
 }
 
@@ -19,7 +30,7 @@ export default function ImageModal({ isOpen, onClose, imageUrl, alt }: Props) {
       overlayClassName={css.overlayContainer}
     >
       {imageUrl &&<div className={css.content}>
-        <img src={imageUrl} alt={alt} className={css.image} />
+        <img src={imageUrl.urls.small} alt={alt} className={css.image} />
         <button className={css.btnClose} onClick={onClose}>
           ✖
         </button>

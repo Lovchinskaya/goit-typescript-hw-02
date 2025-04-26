@@ -11,7 +11,7 @@ import ImageModal from '../ImageModal/ImageModal.js';
 import ErrorMessage from '../ErrorMessage/ErrorMessage.js';
 
 interface Image {
-  id: string;
+  id: number;
   description: string;
   urls: {
     small: string;
@@ -28,7 +28,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<Image | null | string>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleSearch = (topic: string) => {
@@ -69,7 +69,7 @@ export default function App() {
     getData();
   }, [searchTerm, page]);
 
-  const openModal = (imageUrl: string) => {
+  const openModal = (imageUrl: Image) => {
     setSelectedImage(imageUrl);
     setIsModalOpen(true);
   };
