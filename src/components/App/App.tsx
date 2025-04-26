@@ -28,7 +28,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [selectedImage, setSelectedImage] = useState<Image | null | string>(null);
+  const [selectedImage, setSelectedImage] = useState<Image | null >(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleSearch = (topic: string) => {

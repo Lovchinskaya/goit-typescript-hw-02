@@ -17,7 +17,7 @@ interface Image {
 type Props = {
   isOpen: boolean, 
   onClose: () => void, 
-  imageUrl: Image, 
+  imageUrl: Image | null, 
   alt: string,
 }
 
